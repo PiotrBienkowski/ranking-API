@@ -1,15 +1,26 @@
 import lib
+from flask import Flask, jsonify, render_template
+from flask_sqlalchemy import SQLAlchemy
+from flask_restful import Api, Resource
 
-class Player:
-    sum_of_points = 0
-    max_result = 0
-    password_hash = "X"
-    def __init__(self, name, password):
-        self.name = name
-        self.password_hash = lib.password_hash(password)
+app = Flask(__name__)
+api = Api(app)
 
-tab = []
-tab.append(Player("Krzys", 5123))
-tab.append(Player("Jan", 1234))
-tab.append(Player("Jacek", 7234))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+db = SQLAlchemy(app)
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    max_sore = db.Column(db.Integer, default=0)
+    amount_of_floors = db.Column(db.Integer, default=0)
+    password_hash = db.Column(db.String(200), default="")
+    score_hash = db.Column(db.String(200), default="")
+
+@app.route('/config')
+def config():
+    return render_template('config.html')
+
+@app.route('/sign_up')
+def sign_up():
+    return render_template('signUp.html')

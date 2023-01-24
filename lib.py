@@ -12,3 +12,6 @@ def check_password(password, hash):
         return True
     else:
         return False
+
+def create_database(db):
+    db.create_all()
