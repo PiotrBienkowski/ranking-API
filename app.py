@@ -1,9 +1,13 @@
 import lib
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, request, render_template
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api, Resource
 
+import controllers.User as contrUser
+
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -17,10 +21,11 @@ class User(db.Model):
     password_hash = db.Column(db.String(200), default="")
     score_hash = db.Column(db.String(200), default="")
 
-@app.route('/config')
-def config():
-    return render_template('config.html')
-
-@app.route('/sign_up')
-def sign_up():
-    return render_template('signUp.html')
+@app.route('/create-user', methods=['POST'])
+def create_user():
+    data = request.get_json()
+    return contrUser.CreateUser(data, User, db)
+    
+@app.route('/all-users')
+def all_users():
+    return contrUser.all_users(User)
