@@ -1,4 +1,4 @@
-function createUserForm() {
+function loginUserForm() {
     const name = document.getElementById("name").value;
     const password = document.getElementById("password").value;
     prepareDataCreateUser(name, password);
@@ -35,7 +35,7 @@ function sendDataToAPI(name, password_hash) {
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
     };
-    fetch('http://127.0.0.1:8000/create-user', options)
+    fetch('http://127.0.0.1:8000/login', options)
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error(error));

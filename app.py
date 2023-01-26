@@ -16,10 +16,9 @@ db = SQLAlchemy(app)
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    max_sore = db.Column(db.Integer, default=0)
-    amount_of_floors = db.Column(db.Integer, default=0)
+    max_score = db.Column(db.Integer, default=0)
+    level = db.Column(db.Integer, default=0)
     password_hash = db.Column(db.String(200), default="")
-    score_hash = db.Column(db.String(200), default="")
 
 @app.route('/create-user', methods=['POST'])
 def create_user():
@@ -28,4 +27,18 @@ def create_user():
     
 @app.route('/all-users')
 def all_users():
-    return contrUser.all_users(User)
+    return contrUser.AllUsers(User)
+
+@app.route('/ranking')
+def showRanking():
+    return contrUser.Ranking(10, User)
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    return contrUser.Login(data, User)
+
+@app.route('/update-result', methods=['POST'])
+def method_name():
+    data = request.get_json()
+    return contrUser.UpdateResult(data, User, db)
