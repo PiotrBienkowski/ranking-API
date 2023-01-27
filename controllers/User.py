@@ -5,7 +5,7 @@ import models.UserModel
 def CreateUser(data, UserClass, db):
     name = data.get('name')
     password_hash = data.get('password_hash')
-    return models.UserModel.createUser(name, password_hash, UserClass, db)
+    return jsonify(models.UserModel.createUser(name, password_hash, UserClass, db))
 
 def AllUsers(UserClass):
     users_json = jsonify(models.UserModel.allUser(UserClass))

@@ -1,4 +1,5 @@
 import hashlib
+import time
 
 def password_hash(password):
     ret = ""
@@ -15,3 +16,6 @@ def check_password(password, hash):
 
 def create_database(db):
     db.create_all()
+
+def get_timestamp():
+    return int(time.time())

@@ -10,6 +10,8 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
+DEBUG = False
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
@@ -27,7 +29,10 @@ def create_user():
     
 @app.route('/all-users')
 def all_users():
-    return contrUser.AllUsers(User)
+    if DEBUG:
+        return contrUser.AllUsers(User)
+    else:
+        return ""
 
 @app.route('/ranking')
 def showRanking():
