@@ -36,7 +36,8 @@ def all_users():
 
 @app.route('/ranking')
 def showRanking():
-    return contrUser.Ranking(10, User)
+    limit = 10
+    return contrUser.Ranking(limit, User)
 
 @app.route('/login', methods=['POST'])
 def login():
